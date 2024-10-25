@@ -31,6 +31,7 @@ import { argName, colName } from "./drivers/utlis";
 import { Driver as Sqlite3Driver } from "./drivers/better-sqlite3";
 import { Driver as PgDriver } from "./drivers/pg";
 import { Driver as PostgresDriver } from "./drivers/postgres";
+import { Driver as DenoPostgresDriver } from "./drivers/deno_postgres";
 import { Mysql2Options, Driver as MysqlDriver } from "./drivers/mysql2";
 
 // Read input from stdin
@@ -88,6 +89,9 @@ function createNodeGenerator(options: Options): Driver {
       return new PgDriver();
     }
     case "postgres": {
+      if (options.runtime === 'deno') {
+        return new DenoPostgresDriver();
+      }
       return new PostgresDriver();
     }
     case "better-sqlite3": {
